@@ -1,0 +1,57 @@
+h1,h2 {
+    font-family: Oswald;
+}
+
+body {
+    font-family: 'Open Sans';
+    color: darkblue;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 950px;
+    background-color: ivory;
+}
+
+img {
+    float: left;
+}
+
+.IE {
+    max-width: 300px;
+    float: left;
+    padding-right: 15px;
+
+}
+
+.Firefox {
+    max-width: 300px;
+    float: left;
+    padding-right: 15px;
+}
+
+.Chrome {
+    max-width: 300px;
+    float: left;
+    padding-right: 15px;
+}
+
+.first {
+    padding-right: 100px;
+}
+
+.second {
+    padding-right: 100px;
+}
+
+.third {
+    padding-right: 100px;
+}
+
+.fourth {
+    padding-right: 100px;
+}
+
+.nav {
+    padding-left: 50px;
+}
