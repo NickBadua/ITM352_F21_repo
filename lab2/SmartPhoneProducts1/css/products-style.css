@@ -8,11 +8,6 @@ body {
 
 }
 
-/* Styling the products display */ 
-img {  
-    width: 200px;
-    height: 200px;
-}
 /* Typography */ 
 h1, h2 {
     text-align: center;
@@ -23,11 +18,17 @@ main {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-/* Form styling */  
+
+    /* Form styling */  
     border: 5px solid black;
     display: flex;
 }
 
+/* Styling the products display */ 
+img {  
+    width: 200px;
+    height: 200px;
+}
    
 
 
