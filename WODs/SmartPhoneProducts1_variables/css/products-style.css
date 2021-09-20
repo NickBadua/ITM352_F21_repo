@@ -1,0 +1,49 @@
+/* General */  
+body {
+    width: 800px; 
+    margin: 0 auto;
+    background-image: url("/Users/nicholasbadua/Documents/GitHub/ITM352_F21/lab3/SmartPhoneProducts1/images/phone_globe.jpg");
+    background-repeat: no-repeat;      
+    background-position: center;
+
+}
+
+/* Typography */ 
+h1, h2 {
+    text-align: center;
+}
+
+main {
+/* block styling */ 
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+
+    /* Form styling */  
+    border: 5px solid black;
+    display: flex;
+}
+
+/* Styling the products display */ 
+img {  
+    width: 200px;
+    height: 200px;
+}
+   
+.rotate img
+{
+  animation: rotation .3s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+
+
+
