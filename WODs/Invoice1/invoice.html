@@ -119,11 +119,49 @@ This is a sample sales receipt for a sale.
             <td width="54%">$<script>document.write(salestax.toFixed(2))</script></td>
           </tr>
           <tr>
-            <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
-            <td width="54%"><b>$<script>document.write(total.toFixed(2))</script></b></td>
+            <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Shipping</span></td>
+            <td width="54%"><script>
+              //Computing shipping cost for sales up to $49.99
+              if (subtotal < 50) {
+                var shipping = 2;
+              //Computing shipping cost for sales up to $99.99 
+              } else if (subtotal < 100) {
+                var shipping = 5;
+              //Computing shipping cost for sales $100 and over
+              } else {
+                var shipping = .05;
+              }
+              //Displaying 5%
+              if (shipping < 1) {
+              document.write((shipping * 100) + "%");
+              //Displaying numerical
+              } else {
+              document.write("$" + shipping.toFixed(2));
+              }
+            </script>
+            </td>
           </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+            <td width="54%"><b>$<script>
+              //Calculating total for costs under $100
+              if (shipping > 1){ 
+              document.write((shipping + total).toFixed(2))
+              //Calculating total for costs over $100
+              } else {
+              document.write ((shipping * subtotal) + total);
+              }
+            </script></b></td>
+              </tr>
         </tbody>
       </table>
     
+      <br>
+<b>
+  OUR SHIPPING POLICY IS:A subtotal $0 - $49.99 will be $2 shipping<br>
+A subtotal $50 - $99.99 will be $5 shipping<br>
+Subtotals over $100 will be charged 5% of the subtotal amount<br> 
+</b>
+      
 </body>
 </html>
