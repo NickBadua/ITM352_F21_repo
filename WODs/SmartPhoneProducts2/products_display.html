@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        var store_name = "Nicholas Badua";
+        var hits = 1;
+        spins = 10;
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartphone Products</title>
+
+    <link rel="stylesheet" href="./css/products-style.css">
+
+    <script src=./products_data.js></script>
+
+<style>
+img {
+            border: 1px solid #ddd;
+            /* Gray border */
+            border-radius: 4px;
+            /* Rounded border */
+            padding: 5px;
+            /* Some padding */
+            width: 150px;
+            /* Set a small width */
+        }
+
+        /* Add a hover effect (blue shadow) */
+        img:hover {
+            box-shadow: 0 0 5px 1px black;
+        }
+</style>
+
+</head>
+<body>
+
+    <header>
+        <h1>
+    <script>
+        document.write(store_name);
+
+    </script>'s
+     Used Smart Phone Store</h1>
+
+</header>
+
+    <div><main>
+    <script>
+        for(var i = 1; eval("typeof name"+i) != 'undefined'; i++) {
+        document.write(`
+    <section class="item" onmouseover="this.className='item rotate';" onclick="this.className='item';">
+        <h2>${eval("name" + i)}</h2>
+        <p>$${eval("price" + i)}</p>
+        <img src = ${eval("image" + i)}>
+    </section>
+
+    `);
+};
+</script>
+</main></div>
+<h1>
+    Your One Stop Phone Shop -
+    <script>
+        document.write(store_name);
+    </script>
+</h1>
+</body>
+
+</html>
