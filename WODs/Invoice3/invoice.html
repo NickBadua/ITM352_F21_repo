@@ -1,6 +1,6 @@
 <script>
 /*
-This is a sample sales receipt for a sale.
+I ended up writing over the Invoice1 code, so this is actually Invoice2
 */
 
 // Product Data
@@ -29,22 +29,8 @@ This is a sample sales receipt for a sale.
      var quantity5 = 4;
      var price5 = 1.90;
 
-    //Compute extended prices
-    var extended_price1 = price1 * quantity1;
-    var extended_price2 = price2 * quantity2;
-    var extended_price3 = price3 * quantity3;
-    var extended_price4 = price4 * quantity4;
-    var extended_price5 = price5 * quantity5;
-
-    //Compute Sub-total
-    var subtotal = extended_price1 + extended_price2 + extended_price3 + extended_price4 + extended_price5;
     
-    //Compute Sales Tax
-    var tax = .0575;
-    var salestax = subtotal * tax;
 
-    //Compute Grand Total
-    var total = subtotal + salestax;
 
 </script>
 
@@ -67,44 +53,32 @@ This is a sample sales receipt for a sale.
             <th style="text-align: center;" width="54%">extended price</th>
           </tr>
           <script>
+            subtotal = 0;
+
+            for (var i = 1; eval("typeof item"+i) != 'undefined'; i++) {
+              
+              var extended_price = eval("price" + i) * eval("quantity" + i);
+              subtotal = subtotal + extended_price;
+              
               document.write(`
           
             <tr>
-            <td width="43%">${item1}</td>
-            <td align="center" width="11%">${quantity1}</td>
-            <td width="13%">$${price1}</td>
-            <td width="54%">$${extended_price1}</td>
+            <td width="43%">${eval("item" + i)}</td>
+            <td align="center" width="11%">${eval("quantity" + i)}</td>
+            <td width="13%">$${eval("price" + i).toFixed(2)}</td>
+            <td width="54%">$${eval("extended_price").toFixed(2)}</td>
           </tr>
 
-          <tr>
-            <td width="43%">${item2}</td>
-            <td align="center" width="11%">${quantity2}</td>
-            <td width="13%">$${price2}</td>
-            <td width="54%">$${extended_price2}</td>
-          </tr>
+            `);
+        }
+        
+        //Compute Sales Tax
+        var tax = .0575;
+        var salestax = subtotal * tax;
 
-          <tr>
-            <td width="43%">${item3}</td>
-            <td align="center" width="11%">${quantity3}</td>
-            <td width="13%">$${price3}</td>
-            <td width="54%">$${extended_price3}</td>
-          </tr>
-          
-          <tr>
-            <td width="43%">${item4}</td>
-            <td align="center" width="11%">${quantity4}</td>
-            <td width="13%">$${price4}</td>
-            <td width="54%">$${extended_price4}</td>
-          </tr>
+        //Compute Grand Total
+        var total = subtotal + salestax;
 
-          <tr>
-            <td width="43%">${item5}</td>
-            <td align="center" width="11%">${quantity5}</td>
-            <td width="13%">$${price5}</td>
-            <td width="54%">$${extended_price5}</td>
-          </tr>
-
-            `)
         </script>
           <tr>
             <td colspan="4" width="100%">&nbsp;</td>
