@@ -1,0 +1,160 @@
+<script src = ./products_data.js></script>
+
+<script>
+/*
+I ended up writing over the Invoice1 code, so this is actually Invoice2
+*/
+
+// Product Data
+     // Product 1
+     var item1 = 'Gillette Sensor 3 Razor';
+     var quantity1 = 2;
+     var price1 = 1.23;
+
+     // Product 2
+     var item2 = 'Shaving Cream';
+     var quantity2 = 1;
+     var price2 = 4.30;
+
+     // Product 3
+     var item3 = 'Comb';
+     var quantity3 = 1;
+     var price3 = 2.25;
+
+     // Product 4
+     var item4 = 'Toothbrush';
+     var quantity4 = 3;
+     var price4 = 3.42;
+
+     // Product 5
+     var item5 = 'Floss';
+     var quantity5 = 4;
+     var price5 = 1.90;
+
+
+var quantities = [1,-2,3.2,-4.1,5];
+
+function generate_item_rows(product_quantities_array) {
+  for (i in products) {
+              if (product_quantities_array[i] == 0) continue;
+               errors= isNonNegInt(product_quantities_array[i], true);
+              if (errors.length == 0) {
+              var extended_price = products[i].price * product_quantities_array[i];
+              subtotal = subtotal + extended_price;
+              } else {
+                extended_price = 0;
+              }
+              document.write(`
+          
+            <tr>
+            <td width="43%">${products[i].brand}</td>
+            <td align="center" width="11%">${product_quantities_array[i]}<br><font color = "red">${errors.join("<br>")}<font></td>
+            <td width="13%">$${products[i].price.toFixed(2)}</td>
+            <td width="54%">$${extended_price.toFixed(2)}</td>
+          </tr>
+
+            `);
+        }
+};
+
+function isNonNegInt(q, returnErrors = false) {
+   //Checks if a string q is a non-neg integer. If returnErrors is ture, the array of errors is erturned, otherwise, returns true q is non-neg int.
+   errors = []; // assume no errors at first
+   if(Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+   if(q < 0) errors.push('Negative value!'); // Check if it is non-negative
+   if(parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+ 
+   return (returnErrors ? errors : (errors.length == 0));
+}
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <table border="2">
+        <tbody>
+          <tr>
+            <th style="text-align: center;" width="43%">Item</th>
+            <th style="text-align: center;" width="11%">quantity</th>
+            <th style="text-align: center;" width="13%">price</th>
+            <th style="text-align: center;" width="54%">extended price</th>
+          </tr>
+          <script>
+            subtotal = 0;
+            generate_item_rows(quantities);
+
+        //Compute Sales Tax
+        var tax = .0575;
+        var salestax = subtotal * tax;
+
+        //Compute Grand Total
+        var total = subtotal + salestax;
+
+        </script>
+          <tr>
+            <td colspan="4" width="100%">&nbsp;</td>
+          </tr>
+          <tr>
+            
+            <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
+            <td width="54%">$<script>document.write(subtotal.toFixed(2))</script></td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @ <script>document.write(tax*100)</script>%</span></td>
+            <td width="54%">$<script>document.write(salestax.toFixed(2))</script></td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Shipping</span></td>
+            <td width="54%"><script>
+              //Computing shipping cost for sales up to $49.99
+              if (subtotal < 50) {
+                var shipping = 2;
+              //Computing shipping cost for sales up to $99.99 
+              } else if (subtotal < 100) {
+                var shipping = 5;
+              //Computing shipping cost for sales $100 and over
+              } else {
+                var shipping = .05;
+              }
+              //Displaying 5%
+              if (shipping < 1) {
+              document.write((shipping * 100) + "%");
+              //Displaying numerical
+              } else {
+              document.write("$" + shipping.toFixed(2));
+              }
+            </script>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+            <td width="54%"><b>$<script>
+              //Calculating total for costs under $100
+              if (shipping > 1){ 
+              document.write((shipping + total).toFixed(2))
+              //Calculating total for costs over $100
+              } else {
+              document.write ((shipping * subtotal) + total);
+              }
+            </script></b></td>
+              </tr>
+        </tbody>
+      </table>
+    
+      <br>
+<b>
+  OUR SHIPPING POLICY IS:A subtotal $0 - $49.99 will be $2 shipping<br>
+A subtotal $50 - $99.99 will be $5 shipping<br>
+Subtotals over $100 will be charged 5% of the subtotal amount<br> 
+</b>
+      
+</body>
+</html>

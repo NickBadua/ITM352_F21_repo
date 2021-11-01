@@ -1,0 +1,24 @@
+<HTML>
+    <HEAD>
+    <TITLE>onSubmit Test</TITLE>
+    <SCRIPT LANGUAGE="JavaScript">
+    function mailMe(form){
+        Subject=document.testform.inputbox1.value;
+        CC= document.testform.inputbox2.value;
+        BCC= document.testform.inputbox3.value;
+        location = "mailto:jwedit@javaworld.com?subject="+Subject+"&Bcc="+
+            BCC+"&cc="+CC;
+        return true;
+    }
+    </SCRIPT>
+    </HEAD>
+    <BODY>
+        <form name="registration_form" action="" method="GET"> 
+        
+        <input type='text' name='register_textbox'>
+        
+        <input type='submit' name='register_submit' value = 'REGISTER' onsubmit = alert(registration_form.register_textbox.value);>
+        
+        </form>
+    </BODY>
+    </HTML>
