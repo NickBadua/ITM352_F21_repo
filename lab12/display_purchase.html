@@ -1,0 +1,10 @@
+<script>
+    let params = (new URL(document.location)).searchParams; //creating a new object with the url: "?quantity_textbox=%2Cjh"
+
+    if (params.has('quantity_textbox') && params.get('quantity_textbox') > 0) {  //looking for url with the key 'quantity_textbox'
+    document.write(`Thank for you for ordering ${params.get('quantity_textbox')} things!`); //the GET request gets the value we put into "quantity_textbox"
+    } else {
+        document.write("Hey! You need to purchase some items!"); 
+        //history.back();
+    }
+</script>

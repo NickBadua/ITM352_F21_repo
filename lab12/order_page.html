@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<script>
+    let params = (new URL(document.location)).searchParams; //creating a new object with the url: "?quantity_textbox=%2Cjh"
+</script>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,9 +13,12 @@
 </head>
 
 <body>
+    <form name="quantity_form" action="" method="post">
     <label>quantity desired:</label>
-    <input id="quantity_textbox" type="text" onkeyup="checkQuantityTextbox(this);">
+    <input name="quantity_textbox" type="text" onkeyup="checkQuantityTextbox(this);">
     <span id='qty_textbox_message'>Enter a quantity</span>
+    <input type="submit" value="Purchase"> 
+</form>
 </body>
 
 </html>
@@ -33,4 +40,28 @@
         }
         return (returnErrors ? errors : (errors.length == 0));
     }
+
+    function displayPurchase() {
+        var qty = quantity_textbox.value;
+        var err = isNonNegInt(qty,true);
+        if (isNonNegInt(qty)) {
+        document.getElementsByTagName('body')[0].innerHTML = `Thank for you for ordering ${qty} things!`;
+        } else {
+            qty_textbox_message.innerHTML= `${err} <font color = "red">Enter a valid quantity</font>`;
+        }
+        
+    }
+
+</script>
+
+<script>
+        if (params.has("quantity_textbox")) { 
+        quantity_form["quantity_textbox"].value = params.get("quantity_textbox");
+        checkQuantityTextbox(quantity_form["quantity_textbox"]); 
+        if (params.get("quantity_textbox") > 0 && errors.length == 0) {
+            window.location.href = "display_purchase.html" + document.location.search;
+        }
+    }
+         
+    
 </script>
