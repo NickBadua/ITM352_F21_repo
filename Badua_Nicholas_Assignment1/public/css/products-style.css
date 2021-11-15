@@ -1,0 +1,102 @@
+/* General */ 
+body {
+  width: auto; 
+  margin: 0;
+
+
+}
+
+.banner {
+
+  display: flex;
+  text-align: right;
+  background-image: url("../images/background.webp");
+  background-size: auto;
+}
+
+.banner_text {
+  padding:16px;
+  max-width: 1000px;
+  margin: 0 auto;
+  color: #fbf8e9;
+  font-size: 8vw;
+  text-shadow: 1px 1px 1px rgb(0, 0, 0);
+}
+
+
+/* Typography */ 
+
+
+h1, h2 {
+  text-align: center;
+  color: black;
+  text-shadow:none;
+}
+
+main {
+/* block styling */
+  padding-top: 20px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+
+
+
+  /* Form styling */  
+  text-align: center;
+  color: black;
+
+}
+
+.product_slots {
+  padding-bottom: 20px;
+}
+
+
+
+/* Styling the products display */ 
+img {  
+  height: 300px;
+  width: auto;
+  /* Gray border */
+  border-radius: 4px;
+  /* Rounded border */
+  padding: 5px;
+  /* Some padding */
+
+  /* Set a small width */
+}
+
+/* Add a hover effect (blue shadow) */
+img:hover {
+  opacity: 0.5;
+
+} 
+
+footer {
+  background-color: rgb(228, 227, 224);
+  padding-bottom:100px;
+  margin-bottom: 50px;
+}
+
+.footer_text {
+  text-align: center;
+  color: #9b9993;
+  font-size: 1.5vw;
+  padding-top: 30px;
+}
+
+input[type=submit] {
+  padding:5px; 
+  border:2px solid #ccc; 
+  border-radius: 5px;
+
+}
+
+input[type=submit]:hover {
+  opacity: 0.5;
+}
+ 
+
+
+
