@@ -12,60 +12,74 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <script>
+        var store_name = "Nicholas Badua";
+    </script>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/page_copy.css">
-    <title>Nick's Tennis Shop Products</title>
-    
+    <title>Nick's Tennis Shop</title>
+
+    <link rel="stylesheet" href="./css/products-style.css">
+
+
+
+
 </head>
+
 <body>
-    <div class= container>
-        <div class="header">
-                <strong>Nick's Tennis Shop</strong>
+
+    <div class="banner">
+        <div class="banner_text">
+            <strong>Nick's Tennis Shop</strong>
         </div>
-        <div class="content-large">
-            <form action="./purchase" method="POST">
-                <main>
-                    <script>
-    for (i = 0; i < products_array.length; i++) { //Uses a loop that creates the products on the page in a consistent format. Based off of previous work done on SmartPhoneProducts3.
+    </div>
+
+    <div>
+        <form action="./purchase" method="POST">
+            <main>
+                <script>
+
+                    for (i = 0; i < products_array.length; i++) { //Uses a loop that creates the products on the page in a consistent format. Based off of previous work done on SmartPhoneProducts3.
                         document.write(`
-                            <div class= "product_slot">
+                            <div class= "product_slot${i}">
                                 <img src = ./images/${products_array[i].image}> 
-                                <div class="item_properties">
                                 <h2>${products_array[i].name}</h2>
                                 <p> Currently Stocked: ${products_array[i].quantity_available}
                                 <p>$${products_array[i].price.toFixed(2)} USD</p>
                                 <label>Qty:</label>
                                 <input type="text" placeholder=0 name="quantity${i}" size="1">
                                 <br>
-                                </div>
                             </div>
 
                         `); 
                     };
-
-                    </script>
-                </main>
-                <h3>Ready to Purchase?</h3>
-            <div class="purchase_button">
-                <input type="submit" value="Place Order">
-            </div>  
-            </form>
-        </div>
-
-        <div class="footer">
-
-                    <h5>
-                        <b>SHIPPING POLICY:</b>
-                        <br>A subtotal $0 - $49.99 will be $2 shipping<br>
-                        A subtotal $50 - $99.99 will be $5 shipping<br>
-                        Subtotals over $100 will be charged 5% of the subtotal amount<br> 
-                    </h5>
-        </div>
+                </script>
+            </main>
+            <br>
+            <input type="submit" value="Place Order">
+        </form>
     </div>
+</div>
 </body>
+
+<footer>
+    <div class="footer_text">
+        The <i>one</i> shop for all your tennis needs!
+        <br>
+        <div class="shipping_policy">
+        <h5><b>SHIPPING POLICY:</b>
+          <br>A subtotal $0 - $49.99 will be $2 shipping<br>
+          A subtotal $50 - $99.99 will be $5 shipping<br>
+          Subtotals over $100 will be charged 5% of the subtotal amount<br> 
+          </h5>
+    </div>
+
+    
+</footer>
 
 <script>
     let params = (new URL(document.location)).searchParams;

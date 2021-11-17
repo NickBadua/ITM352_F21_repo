@@ -1,0 +1,159 @@
+<script>
+
+/*
+Author: Nicholas Badua
+Date: 16 November 2021
+Description: This client page consists of the code for the receipt/invoice following the user inserting their desired amounts previous page (products_display.html).
+*/
+
+</script>
+
+<script src="./products_data.js" type="text/javascript"></script>
+
+<script>
+
+let params = (new URL(document.location)).searchParams;
+  
+var quantities_array = [];  //created an array to hold the textbox values given by the server.
+
+for (i = 0; i < products_array.length; i++) { //update 'quantities_array' array with textbox values
+  quantities_array[i] = params.get("quantity" + i);
+};
+
+
+function generate_item_rows(product_quantities_array) { //function to check if quantity is valid. If it is a valid number, then it will calculate extended price. 
+  for (i in products_array) { 
+              if (product_quantities_array[i] == 0) continue; //if the quantity they put is 0, then skip
+               errors = isNonNegInt(product_quantities_array[i], true);
+              if (errors.length == 0) { //if there are no errors, then calculate extended price and subtotal.
+              var extended_price = products_array[i].price * product_quantities_array[i];
+              subtotal = subtotal + extended_price;
+              } else { //If it is not a valid number, then set extended price to 0.
+                extended_price = 0;
+              }
+              document.write(`
+          
+            <tr>
+            <td width="43%">${products_array[i].name}</td>
+            <td align="center" width="11%">${quantities_array[i]}<br><font color = "red">${errors.join("<br>")}<font></td>
+            <td width="13%">$${products_array[i].price.toFixed(2)}</td>
+            <td width="54%">$${extended_price.toFixed(2)}</td>
+          </tr>
+
+            `); //The above code makes the table for the invoice.
+        }
+};
+function isNonNegInt(q, returnErrors = false) {
+   //Checks if a string q is a non-neg integer. If returnErrors is ture, the array of errors is returned, otherwise, returns true q is non-neg int.
+   errors = []; // assume no errors at first
+   if(Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+   if(q < 0) errors.push('Negative value!'); // Check if it is non-negative
+   if(parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+ 
+   return (returnErrors ? errors : (errors.length == 0));
+}
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="./css/invoice.css">
+    
+    <title>Receipt</title>
+</head>
+<body>
+  <div class="banner">
+    <div class="banner_text">
+        <strong>Nick's Tennis Shop</strong>
+    </div>
+</div>
+  <div class="Thank_you">
+  <h1>Thank you <br>for your purchase! </h1> 
+</div>
+    <table border="2">
+        <tbody>
+          <tr>
+            <th style="text-align: center;" width="43%">Item</th>
+            <th style="text-align: center;" width="11%">quantity</th>
+            <th style="text-align: center;" width="13%">price</th>
+            <th style="text-align: center;" width="54%">extended price</th>
+          </tr>
+          <script>
+            subtotal = 0;
+            //how do i get quantity from the textbox
+            generate_item_rows(quantities_array); //Function that checks the if the value is valid. If valid, then generate the table row.
+
+
+        //Compute Sales Tax
+        var tax = .0575;
+        var salestax = subtotal * tax;
+
+        //Compute Grand Total
+        var total = subtotal + salestax;
+
+        </script>
+          <tr>
+            <td colspan="4" width="100%">&nbsp;</td>
+          </tr>
+          <tr>
+            
+            <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
+            <td width="54%">$<script>document.write(subtotal.toFixed(2))</script></td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @ <script>document.write(tax*100)</script>%</span></td>
+            <td width="54%">$<script>document.write(salestax.toFixed(2))</script></td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Shipping</span></td>
+            <td width="54%"><script>
+              //Computing shipping cost for sales up to $49.99
+              if (subtotal < 50) {
+                var shipping = 2;
+              //Computing shipping cost for sales up to $99.99 
+              } else if (subtotal < 100) {
+                var shipping = 5;
+              //Computing shipping cost for sales $100 and over
+              } else {
+                var shipping = .05;
+              }
+              //Displaying 5%
+              if (shipping < 1) {
+              document.write((shipping * 100) + "%");
+              //Displaying numerical
+              } else {
+              document.write("$" + shipping.toFixed(2));
+              }
+            </script>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+            <td width="54%"><b>$<script>
+              //Calculating total for costs under $100
+              if (shipping > 1){ 
+              document.write((shipping + total).toFixed(2))
+              //Calculating total for costs over $100
+              } else {
+              document.write (((shipping * subtotal) + total).toFixed(2));
+              }
+            </script></b></td>
+              </tr>
+        </tbody>
+      </table>
+<br>
+<div class ="return_to_store">
+<h2>Continue shopping?</h2>
+<form action="./back" method="GET">
+  <input type="submit" value="Return to store">
+ </form>   
+</div>
+</body>
+
+
+</html>

@@ -34,54 +34,57 @@ app.post('/purchase', function (request, response, next) { //Adapted from lab 13
 
     //VALIDATING QUANTITY
         quantities_array = [];
-        finalized_quantities = [];
+        var check_for_only_valid_product_quantities = [];
         var sum_of_quantities_array = 0;
-
+        //Loop
         for (i in products_array) {
-            var q = request.body[`quantity${i}`]; //gets textbox value and places it variable 'q'
+            var quantity_desired_by_user = request.body[`quantity${i}`]; //gets textbox value and places it variable 'quantity_desired_by_user'
             
-            if (q == "") { //When a textbox is left blank, it will be submitted as a 0 to the invoice
-                q = "0";
+            if (quantity_desired_by_user == "") { //When a textbox is left blank, it will be submitted as a 0 to the invoice
+                quantity_desired_by_user = "0";
             };
 
             //VALIDATION: Integer Check
-                if (!isNonNegInt(q)) { //If q is not a valid quantity, then we get redirected back to products_display.html
+                if (!isNonNegInt(quantity_desired_by_user)) { //If quantity_desired_by_user is not a valid quantity, then we get redirected back to products_display.html
                     redirected = true; //We are telling the server that we've been redirected 
+                    
                     response.redirect("products_display.html?error=true");
                 };
 
             //VALIDATION: Enough in Inventory
-                if (q > products_array[i].quantity_available) {
+                if (quantity_desired_by_user > products_array[i].quantity_available) {
                     redirected = true; //We are telling the server that we've been redirected 
                     response.redirect("products_display.html?error=true_not_enough_in_inventory");
                 };
 
             //Used for checking if at least one value was added to a textbox
-                quantities_array[i] = Number(q); //having the objects each indexed position be q so we can then add that to the total sum of quantities
+                quantities_array[i] = Number(quantity_desired_by_user); //having the objects each indexed position be "quantity_desired_by_user" so we can then add that to the total sum of quantities
                 sum_of_quantities_array += quantities_array[i]; //gets sum of the entered quantities
 
             //UPDATING "Total Sold" and "Quantity Available" for each item
-                if (!redirected && isNonNegInt(sum_of_quantities_array) == true && q <= products_array[i].quantity_available) {
-                    products_array[i].total_sold += Number(q); //PROBLEM: IF ONE QUANTITY IS GOOD AND THE OTHER IS BAD, IT WILL GIVE WARNING, BUT WILL STILL REMOVE ITEMS FROM INVENTORY BC IT'S DOING IT FOR THE INDIVIDUAL ITEMS BC OF FOR LOOP. HAVE IT CHECK THE QUANTITIES FIRST, THEN DO THE CALCULATIONS AFTERWARDS.
-                    products_array[i].quantity_available -= Number(q); //updating quantity available
+                if (!redirected && isNonNegInt(sum_of_quantities_array) == true && quantity_desired_by_user <= products_array[i].quantity_available) {
+                    products_array[i].total_sold += Number(quantity_desired_by_user); //PROBLEM: IF ONE QUANTITY IS GOOD AND THE OTHER IS BAD, IT WILL GIVE WARNING, BUT WILL STILL REMOVE ITEMS FROM INVENTORY BC IT'S DOING IT FOR THE INDIVIDUAL ITEMS BC OF FOR LOOP. HAVE IT CHECK THE QUANTITIES FIRST, THEN DO THE CALCULATIONS AFTERWARDS.
+                    products_array[i].quantity_available -= Number(quantity_desired_by_user); //updating quantity available
                 };
 
             //UPDATING Query String   
-                quantity_string = quantity_string + `quantity${i}=` + q + "&&"; //Creates and adds a new "quantity${}" for each textbox and adds it to the query string
-        };
-
-
+                quantity_string = quantity_string + `quantity${i}=` + quantity_desired_by_user + "&&"; //Creates and adds a new "quantity${}" for each textbox and adds it to the query string
+            //Array to ensure that all quantities are valid before we update the total sold/available
+                check_for_only_valid_product_quantities.push(quantity_desired_by_user);
+            }; //End of Loop
+        
+console.log()
     //VALIDATION: Entered at least 1 value into a textbox
         if(sum_of_quantities_array == 0) {
-            response.send("nope");
+            response.redirect("products_display.html?error=true_no_items_were_selected");
         };
+
     //REDIRECT TO INVOICE
         if (!redirected) { //prevents error message in console and stops this code from being executed if there are errors
         response.redirect(quantity_string); //if there are no errors, then go to this file with the now updated query string
         }
-
+        
 });
-
 //Return to Shopping Button After Invoice
 app.get('/back', function (request, response, next) {
     response.redirect("products_display.html");
