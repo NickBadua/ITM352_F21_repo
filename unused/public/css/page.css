@@ -1,0 +1,130 @@
+body {
+    margin: 0;
+    background-color:rgb(233, 221, 210);
+}
+
+.container {
+    width:100vw;
+    height: 100vh;
+
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr 1fr; 
+    grid-template-rows: 50px 1fr 1fr 100px;
+
+    gap: 10px;
+    
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.container div {
+    padding: 10px;
+
+}
+
+.header {
+    border: 2px solid rgb(100, 110, 101);
+    grid-column-start: 1;
+    grid-column-end: 4;
+    background-image: url("../images/background.webp");
+    font-size: 150%;
+    color: rgb(238, 230, 222);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-large_top {
+    border: 2px solid rgb(168, 159, 142);
+    background-color:rgb(245, 240, 235);
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    display: flex;
+    align-items: center;
+
+    font-size: 5vw;
+}
+
+
+.content-large_bottom {
+    border: 2px solid rgb(168, 159, 142);
+    background-color:rgb(245, 240, 235);
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 3;
+
+    font-size: 5vw;
+}
+
+.content-small {
+    border: 2px solid rgb(168, 159, 142);
+    background-color:rgb(245, 240, 235);
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+table {
+    border-collapse: collapse;
+    border:3px solid black;
+
+    align-items: center;
+
+    font-size: 1vw;
+
+    
+}
+
+td {
+    text-align: center;
+    padding:5px;
+    
+}
+
+.content-smaller {
+    border: 2px solid rgb(168, 159, 142);
+    background-color:rgb(235, 227, 221);
+    grid-row-start: 3;
+    grid-row-end: 4;
+    text-align: center;
+    font-size: 2vw;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.footer {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    font-size: 90%;
+    color:rgb(155, 144, 125);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+input[type=submit] {
+    color: white;
+    background-color: #d49787;
+    border: 2px solid #b68173;
+    padding: 25px 50px;
+    margin:0 auto;
+    margin-top: 10px;
+    font-size: 1vw;
+    border-radius: 5px;
+}
+
+input[type=submit]:hover {
+    opacity: 0.5;
+  }

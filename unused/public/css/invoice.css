@@ -1,0 +1,38 @@
+
+
+body {
+    text-align: center;
+
+}
+.Thank_you {
+    float: left;
+    margin-left: 20px;
+    font-size: 2vw;
+    text-align: left;
+}
+.banner {
+
+    display: flex;
+    text-align: right;
+    background-image: url("../images/background.webp");
+    background-size: auto;
+  }
+
+  .banner_text {
+    padding:16px;
+    max-width: 1000px;
+    margin: 0 auto;
+    color: #fbf8e9;
+    font-size: 4vw;
+    text-shadow: 1px 1px 1px rgb(0, 0, 0);
+  }
+
+table {
+    float: right;
+    margin-top: 100px;
+    margin-right: 20px;
+}
+
+.return_to_store {
+ float: right;   
+}

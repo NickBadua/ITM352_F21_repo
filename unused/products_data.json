@@ -1,0 +1,38 @@
+ [
+    {
+        "name": "Wilson Burn 100S", 
+        "price": 160.00,
+        "image": "wilson_burn_100s.jpg",
+        "quantity_available": 3
+    },
+    {
+        "name": "Babolat Pure Aero", 
+        "price": 229.00,
+        "image":"babolat_pure_aero.jpg",
+        "quantity_available": 5
+    },
+    {
+        "name": "Head Graphene 360+ Extreme MP", 
+        "price": 209.00,
+        "image":"head_graphene.jpg",
+        "quantity_available": 8
+    },
+    {
+        "name": "Yonex VCORE 100", 
+        "price": 239.000,
+        "image":"yonex_vcore_100.jpg",
+        "quantity_available": 2
+    },
+    {
+        "name": "Tennis Balls", 
+        "price": 4.50,
+        "image":"tennis_ball.jpeg",
+        "quantity_available": 4
+    },
+    {
+        "name": "Over Grip", 
+        "price": 6.99,
+        "image":"tourna_grip.jpg",
+        "quantity_available": 8
+    }
+]
