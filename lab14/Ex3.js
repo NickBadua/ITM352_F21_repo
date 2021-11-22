@@ -35,14 +35,14 @@ app.post("/login", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
     let login_username = request.body['username'];
     let login_password = request.body['password'];
-    if (typeof user_data_string[login_username] != 'undefined') { //checking if what they put in the username is actually something in the user data
-        if (user_data_string[login_username]["password"] == login_password) {
-            response.send(`${login_username} is logged in...`); 
+    if (typeof user_data_obj[login_username] != 'undefined') { //checking if what they put in the username is actually something in the user data
+        if (user_data_obj[login_username]["password"] == login_password) {
+            response.send(`${login_username} is logged in`); 
         } else {
-            response.send(`incorrect password for ${login_username}`);
-        } else {
-            response.send(`${login_username} does not exist`);
+            response.send(`incorrect password for ${login_username}`); 
         }
+    }  else {
+        response.send(`${login_username} does not exist`);
     }
 });
 
