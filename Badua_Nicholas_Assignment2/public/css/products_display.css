@@ -5,8 +5,7 @@ body {
 /* Navigation bar adapted from https://www.w3schools.com/howto/howto_css_fixed_menu.asp */
 .navbar {
     overflow: hidden;
-    background-color: rgb(61, 57, 53);
-    opacity: 97%;
+    background-color: rgb(22, 22, 22);
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */

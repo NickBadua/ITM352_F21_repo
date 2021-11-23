@@ -4,6 +4,8 @@
   Author: Nicholas Badua
   Date: 18 November 2021
   Description: This is the code for the invoice following the user inserting their desired amounts on the previous page (products_display.html). All computations for the invoice takes place on this page.
+  
+  The code for invoice.html is a modified version of the Invoice4 WOD
   */
 
 </script>
@@ -20,7 +22,6 @@
   for (i = 0; i < products_array.length; i++) { //Inserts the desired user quantities of each product into the quantities_array.
     quantities_array[i] = params.get("quantity" + i); //Desired user amounts of each product is being received through the query string.
   };
-
 
   function generate_item_rows(product_quantities_array) { //Function that creates the invoice product rows only if there is an inputted value for said product. Adapted from Invoice4 WOD.
     for (i in products_array) {
