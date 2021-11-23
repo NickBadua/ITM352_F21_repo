@@ -2,10 +2,11 @@ body {
     margin: 0;
     background-color:rgb(233, 221, 210);
 }
-/* Adapted from https://www.w3schools.com/howto/howto_css_fixed_menu.asp */
+/* Navigation bar adapted from https://www.w3schools.com/howto/howto_css_fixed_menu.asp */
 .navbar {
     overflow: hidden;
-    background-color: #333;
+    background-color: rgb(61, 57, 53);
+    opacity: 97%;
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
@@ -13,18 +14,22 @@ body {
   
   /* Links inside the navbar */
   .navbar a {
-    float: left;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    font-size: 80%;
+    float: right;
     display: block;
-    color: #f2f2f2;
+    color: #f8f3ec;
     text-align: center;
-    padding: 14px 16px;
+    padding: 13px 7px;
+    padding-right: 16px;
     text-decoration: none;
   }
   
   /* Change background on mouse-over */
   .navbar a:hover {
-    background: #ddd;
-    color: black;
+    background: rgb(224, 222, 219);
+    color: rgb(39, 37, 36);
   }
   
   /* Main content */
@@ -124,11 +129,6 @@ img {
   
   }
   
-  /* Add a hover effect (blue shadow) */
-  .product_slot:hover {
-    opacity: 0.7;
-  
-  } 
   
   input[type=submit] {
     padding:5px; 

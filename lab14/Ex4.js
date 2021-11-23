@@ -62,7 +62,7 @@ app.post("/register", function (request, response) {
             users_reg_data[new_user_login_username] = {};
             users_reg_data[new_user_login_username].password = new_user_login_password;
             users_reg_data[new_user_login_username].email = new_user_login_email;
-            fs.writeFileSync(filename, JSON.stringify(users_reg_data, null, 2));
+            fs.writeFileSync(filename, JSON.stringify(users_reg_data, null, 2)); //null,2 keeps the formatting of json
             //redirect to login page
             response.redirect('/login?login=successful');
         }
