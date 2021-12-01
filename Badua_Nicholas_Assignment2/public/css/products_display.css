@@ -2,34 +2,6 @@ body {
     margin: 0;
     background-color:rgb(233, 221, 210);
 }
-/* Navigation bar adapted from https://www.w3schools.com/howto/howto_css_fixed_menu.asp */
-.navbar {
-    overflow: hidden;
-    background-color: rgb(22, 22, 22);
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-    width: 100%; /* Full width */
-  }
-  
-  /* Links inside the navbar */
-  .navbar a {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: bold;
-    font-size: 80%;
-    float: right;
-    display: block;
-    color: #f8f3ec;
-    text-align: center;
-    padding: 13px 7px;
-    padding-right: 16px;
-    text-decoration: none;
-  }
-  
-  /* Change background on mouse-over */
-  .navbar a:hover {
-    background: rgb(224, 222, 219);
-    color: rgb(39, 37, 36);
-  }
   
   /* Main content */
   .main {
@@ -84,6 +56,7 @@ body {
     background-color:rgb(245, 240, 235);
     justify-content: center;
     align-items: center;
+    
 }
 
 .product_slot {
@@ -96,6 +69,11 @@ body {
 .item_properties {
     text-align: center;
     background-color: white;
+
+}
+
+.bad_input {
+  color: rgba(255, 0, 0, 0.788);
 }
 
 h3 {
@@ -127,8 +105,7 @@ img {
     /* Some padding */
   
   }
-  
-  
+
   input[type=submit] {
     padding:5px; 
     border:2px solid #ccc; 
@@ -146,3 +123,7 @@ img {
     opacity: 0.5;
   }
 
+input[type=text] {
+  width: 27px;
+  text-align: center;
+}

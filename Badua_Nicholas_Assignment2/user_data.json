@@ -1,0 +1,27 @@
+{
+  "nickbadua": {
+    "full_name": "Nicholas Badua",
+    "password": "passward",
+    "email": "nick@gmail.com"
+  },
+  "jackpee": {
+    "full_name": "jackson peter",
+    "password": "123456",
+    "email": "jackpp@gmail.com"
+  },
+  "donglover": {
+    "full_name": "donald glover",
+    "password": "123123",
+    "email": "don@gmail.com"
+  },
+  "jeffw": {
+    "full_name": "jeff wittek",
+    "password": "123123",
+    "email": "jeff@gmail.com"
+  },
+  "itm352": {
+    "full_name": "Grader",
+    "password": "grader",
+    "email": "ta@hawaii.edu"
+  }
+}

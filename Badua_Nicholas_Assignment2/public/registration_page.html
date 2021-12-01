@@ -1,37 +1,140 @@
+<!--
+    Author: Nicholas Badua
+    Date: 30 November 2021
+    Description: This is the code for the registration page which comes if a user does not already have an account.
+  
+-->
+
+<script>
+    var params = (new URL(document.location)).searchParams; //Puts the url into the params variable. Used (later) to get information from the query string.
+    var registration_action = "./register?"; 
+    registration_action += params; //Keeps the quantities around.
+
+    var login_action = "./login?";
+    login_action += params; //Keeps the quantities around.
+
+
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/registration_page.css">
-    <link rel="shortcut icon" type= 'image/jpg' href="https://img.icons8.com/doodle/48/000000/tennis-ball.png"/>
+    <link rel="shortcut icon" type='image/jpg' href="https://img.icons8.com/doodle/48/000000/tennis-ball.png" />
     <title>Register</title>
 </head>
+
 <body>
 
-    <div class = container>
-    <div class = login_card>
-    <div class= close_window>
-        <a href="./products_display.html">
-        <img src="./images/close_window.png" height="25px" width="25px">
-        </a>
-    </div>
-    <div class = header>Register</div>
-    
-    <form action="" method="POST">
-        <input type="text" name="username" size="40" placeholder="Email Address" ><br />
-        <input type="text" name="username" size="40" placeholder="Create a Username" ><br />
-        <input type="password" name="password" size="40" placeholder="Create a Password"><br />
-        <input type="password" name="reentered_password" size="40" placeholder="Confirm Password"><br />
-        <input type="submit" value="Create An Account" id="submit">
-        </form>
-    </div>
-    <div class = no_account>
-        Already a user? 
-        <a href="./login_page.html">Log in.</a>
-        
-    </div>
+    <div class=container>
+        <div class=login_card>
+            <div class=header>Register</div>
+
+            <script> 
+                document.write(`<form name = "registration_fields" action=${registration_action} method="POST">`) //The form submits to itself (with the quantities in the query string) so that it can be carried through once it redirects to the login page again. 
+            </script>
+
+            <input type="text" name="full_name" size="40" placeholder="Full Name"><br>
+            <script>
+                //Selecting which error message to display depending on the error received from server-side
+                if (params.get("full_name_error") == "true") {  //Left name field blank
+                    document.write(`<div class= invalid_input>Enter your full name</div>`);
+                } else if (params.get("full_name_syntax_error") == "true") { //Tried to use a special character
+                    document.write(`<div class= invalid_input>Only letters allowed!</div>`); 
+                } else if (params.get("full_name_length_error") == "long") { //Put in a value that is too long
+                    document.write(`<div class= invalid_input>Must be less than 30 characters long</div>`);
+                } else {
+                    document.write("<br>"); //Maintains similar spacing to when there is no message
+                }
+            </script>
+
+            <input type="text" name="email" size="40" placeholder="Email Address"><br>
+
+            <script>
+                //Selecting which error message to display depending on the error received from server-side
+                if (params.get("email_error") == "true") { //Left the email field blank
+                    document.write(`<div class= invalid_input>Enter a valid email</div>`);
+                } else if (params.get("email_format_error") == "true") { //Wrong formatting
+                    document.write(`<div class= invalid_input>Proper formatting required (e.g., user@gmail.com)</div>`);
+                } else {
+                    document.write("<br>"); //Maintains similar spacing to when there is no message
+                }
+            </script>
+            <input type="text" name="username" size="40" placeholder="Create a Username"><br>
+            <script>
+                //Selecting which error message to display depending on the error received from server-side
+                if (params.get("username_error") == "true") {
+                    document.write(`<div class= invalid_input>Enter a username</div>`); //Left the field blank
+                } else if (params.get("username_syntax_error") == "true") {
+                    document.write(`<div class= invalid_input>Only letters and numbers allowed!</div>`); //Tried to use a special character
+                } else if (params.get("username_length_error") == "short") {
+                    document.write(`<div class= invalid_input>Username must be at least 4 characters</div>`); //Username was too short
+                } else if (params.get("username_length_error") == "long") {
+                    document.write(`<div class= invalid_input>Username must be less than 10 characters</div>`); //Username was too long
+                } else if (params.get("username_exists") == "true") {
+                    document.write(`<div class= invalid_input>Username already taken!</div>`); //Username already exists in file.
+                } else {
+                    document.write("<br>"); //Maintains similar spacing to when there is no message
+                };
+            </script>
+            <input type="password" name="password" size="40" placeholder="Create a Password"><br>
+            <script>
+                //Selecting which error message to display depending on the error received from server-side
+                if (params.get("password_error") == "true") {
+                    document.write(`<div class= invalid_input>Enter a password</div>`); //Left the field blank
+                } else if (params.get("password_length_error") == "short") {
+                    document.write(`<div class= invalid_input>Password must be at least 6 characters</div>`); //Password is too short
+                } else {
+                    document.write("<br>"); //Maintains similar spacing to when there is no message
+                };
+            </script>
+            <input type="password" name="reentered_password" size="40" placeholder="Confirm Password"><br>
+            <script>
+                //Selecting which error message to display depending on the error received from server-side
+                if (params.get("password_match_error") == "true") {
+                    document.write(`<div class= invalid_input>Passwords don't match</div>`); //The repeat-password doesn't match the original password.
+                } else {
+                    document.write("<br>"); //Maintains similar spacing to when there is no message
+                };
+            </script>
+            <input name="create_account_button_name" type="submit" value="Create An Account" id="submit">
+            </form>
+        </div>
+        <div class=already_have_account>
+            Already a user?
+            <script>
+            
+            //Link to return back to the login page without having to register.
+                document.write(`
+            <a href=${login_action}>Login in</a>
+        `)
+            </script>
+
+
+        </div>
     </div>
 </body>
+
+<script>
+    //These create the sticky textboxes
+    //getting the values from the query string
+    var username = params.get("username"); 
+    var email = params.get("email");
+    var full_name = params.get("full_name");
+
+    //putting the values into the textboxes again after post method
+    if (params.get("attempted_registration") == "true") {
+        registration_fields["full_name"].value = full_name;
+        registration_fields["email"].value = email;
+        registration_fields["username"].value = username;
+        //changes the value of the registration button to continue after a failed attempt to register
+        registration_fields["create_account_button_name"].value = "Continue"; 
+    };
+
+</script>
+
 </html>
