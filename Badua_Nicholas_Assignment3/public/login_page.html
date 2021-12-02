@@ -1,0 +1,83 @@
+<!--
+    Author: Nicholas Badua
+    Date: 30 November 2021
+    Description: This is the code for the login page which follows the user submitting the quantities on the products display page.
+-->
+
+<script>
+
+    var params = (new URL(document.location)).searchParams; //Puts the url into the params variable. Used (later) to get information from the query string.
+    var login_action = "./login?";
+    login_action += params; //Keeps the quantities around.
+
+    var registration_action = "./register?";
+    registration_action += params; //Keeps the quantities around.
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/login_page.css">
+    <link rel="shortcut icon" type='image/jpg' href="https://img.icons8.com/doodle/48/000000/tennis-ball.png" />
+    <title>Log In</title>
+</head>
+
+<body>
+
+    <div class=container>
+        <div class=login_card>
+                <div class=header>Log In</div>
+                <script> //Post the form to itself so that I can keep the quantities in the query
+                    document.write(`<form name="login_fields" action=${login_action} method="POST">
+                    <input type="text" name="username" size="40" placeholder="Username" ><br>`)
+                </script>
+                <script>
+                    //Selecting which error message to display depending on the error received from server-side
+                    if (params.get("attempted_login") == "true" && params.get("login_username_check") == "does_not_exist") { //If username doesn't match any in the user_data.json
+                        document.write(`<div class="invalid_username"> Please enter a valid username </div>`)
+                    } else {
+                        document.write(`<br>`)
+                    }
+                </script>
+                <input type="password" name="password" size="40" placeholder="Password"><br>
+                <script>
+                    if (params.get("login_password") == "incorrect") { //If the password doesn't match the recorded password that I have in the user_data.json file under that username
+                        document.write(`<div class="invalid_password"> Incorrect Password </div>`)
+                    }
+                </script>
+                <input type="submit" value="Log In" id="submit">
+
+                </form>
+            <div class=no_account>
+                New user?
+                <script>
+                    document.write(`<a href=${registration_action}>Register</a>`) //Link to go registration page if they have no account already.
+                </script>
+            </div>
+        </div>
+
+</body>
+
+<script>
+
+    //Makes username login field sticky. Not the password though for security reasons.
+    var entered_username = params.get("login_username");
+
+    if (params.get("attempted_login") == "true") {
+        login_fields["username"].value = entered_username; //making username sticky
+    };
+    if (params.get("login") == "no_login_entered") {
+        alert("Please enter your username.") //if there is no username inputted, then it sends an alert.
+    }
+    if (params.get("registration_successful") == "true") { //This pops up after the registration. It just made more sense to me to have the customer test out the account after they register.
+        alert("Registration successful! Please log in to continue.")
+    }
+
+</script>
+
+</html>

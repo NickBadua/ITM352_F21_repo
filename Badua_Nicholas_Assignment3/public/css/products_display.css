@@ -1,0 +1,129 @@
+body {
+    margin: 0;
+    background-color:rgb(233, 221, 210);
+}
+  
+  /* Main content */
+  .main {
+    margin-top: 30px; /* Add a top margin to avoid content overlay */
+}
+
+.container {
+    width:100vw;
+    height: 100vh;
+
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr 1fr; 
+    grid-template-rows: 450px 1fr 1fr 100px;
+
+    gap: 10px;
+    
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.container div {
+    padding: 10px;
+}
+
+.header {
+    border: 3px solid rgb(100, 110, 101);
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    background-image: url("../images/background.webp");
+    font-size: 350%;
+    color: rgb(238, 230, 222);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+
+.content-large {
+    border: 2px solid rgb(168, 159, 142);
+    grid-column-start: 1;
+    grid-column-end: 4;
+    font-size: 2vw;
+    font-size: 2vh;
+    background-color:rgb(245, 240, 235);
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.product_slot {
+    border: 2px solid rgb(231, 220, 199);
+    display:inline-block;
+    margin: 8px;
+
+}
+
+.item_properties {
+    text-align: center;
+    background-color: white;
+
+}
+
+.bad_input {
+  color: rgba(255, 0, 0, 0.788);
+}
+
+h3 {
+    text-align: center;
+}
+
+.footer {
+
+    grid-column-start: 1;
+    grid-column-end: 4;
+    font-size: 90%;
+    color:rgb(155, 144, 125);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling the products display */ 
+img { 
+    float: left; 
+    height: 50vw;
+    height: 50vh;
+    width: auto;
+    /* Gray border */
+    border-radius: 4px;
+    /* Rounded border */
+    padding: 5px;
+    /* Some padding */
+  
+  }
+
+  input[type=submit] {
+    padding:5px; 
+    border:2px solid #ccc; 
+    border-radius: 5px;
+    color: white;
+    background-color: #d49787;
+    border: 2px solid #b68173;
+    padding: 25px 50px;
+    margin:0 auto;
+    display:block;
+  
+  }
+  
+  input[type=submit]:hover {
+    opacity: 0.5;
+  }
+
+input[type=text] {
+  width: 27px;
+  text-align: center;
+}

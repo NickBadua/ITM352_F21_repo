@@ -1,0 +1,123 @@
+<!--
+    Author: Nicholas Badua
+    Date: 30 November 2021
+    Description: This is the code for the products display page containing all the products along with their prices and inventory stock amounts.
+    
+    NOTE: The code for products_display.html is adapted from SmartPhoneProducts3 WOD for use in Assignments 1 and 2.
+
+-->
+
+
+<script src="./products_data.js" type="text/javascript"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/products_display.css">
+    <title>Nick's Tennis Shop Products</title>
+    <link rel="shortcut icon" type='image/jpg' href="https://img.icons8.com/doodle/48/000000/tennis-ball.png" />
+
+</head>
+
+<script>
+    var params = (new URL(document.location)).searchParams; //Puts the url into the params variable. Used (later) to get information from the query string.
+</script>
+
+<body>
+    <div class=container>
+        <div class="header">
+            <strong>Nick's Tennis Shop</strong>
+        </div>
+        <div class="content-large">
+            <form name="quantity_boxes" action="./purchase" method="POST">
+                <main>
+
+                    <script>
+
+                        for (i = 0; i < products_array.length; i++) { //Uses a loop that creates the products on the page in a consistent format. Based off of previous work done on SmartPhoneProducts3.
+                            if (params.get(`quantity${i}`)) { //AFTER VALIDATION: if there are errors...
+                                var error_message = params.get(`quantity${i}`).replace(/invalid_number/g, "is not a positive whole number!").replace(/too_many_selected/g, "is too many. There's not enough in stock.");
+                                if (Number(error_message) == 0 || Number(error_message) === parseInt(error_message)) {
+                                    var error_message = "<br>"; //Replaces the message with a break to maintaining the spacing when there is no error message. Otherwise it puts the value from the textbox underneath the products that don't have an error as well.
+                                };
+
+                                //Displays the error message beneath the product with the error.
+                                document.write(`
+                            <div class= "product_slot">
+                                <img src = ./images/${products_array[i].image}> 
+                                <div class="item_properties">
+                                <h2>${products_array[i].name}</h2>
+                                <p> Currently Stocked: ${products_array[i].quantity_available}
+                                <p>$${products_array[i].price.toFixed(2)} USD</p>
+                                <label>Qty:</label>
+                                <input type="text" placeholder=0 name="quantity${i}" size="1">
+                                <br>
+                                <div class="bad_input">
+                                ${error_message}
+                                </div>
+                                </div>
+                            </div>
+
+                        `);
+                            } else { //This is what people see before they try to submit (i.e., there are no errors.)
+                                document.write(`
+                            <div class= "product_slot">
+                                <img src = ./images/${products_array[i].image}> 
+                                <div class="item_properties">
+                                <h2>${products_array[i].name}</h2>
+                                <p> Currently Stocked: ${products_array[i].quantity_available}
+                                <p>$${products_array[i].price.toFixed(2)} USD</p>
+                                <label>Qty:</label>
+                                <input type="text" placeholder=0 name="quantity${i}">
+                                <br>
+                                <br>
+                                <br>
+                                </div>
+                            </div>
+
+                        `);
+                            };
+
+                        };
+
+                    </script>
+
+                </main>
+                <h3>Ready to Purchase?</h3>
+                <div class="purchase_button">
+                    <input type="submit" value="Place Order">
+                </div>
+            </form>
+        </div>
+
+        <div class="footer">
+
+            <h5>
+                <b>SHIPPING POLICY:</b>
+                <br>Domestic Flat Rate Shipping Fee is $5.99
+                <br>Free Shipping For Orders Over $100.00
+            </h5>
+        </div>
+    </div>
+</body>
+
+<script>
+    if (params.get("quantity0")) {
+        //Makes the quantity textboxes sticky
+        for (i in products_array) {
+            quantity_boxes[`quantity${i}`].value = params.get(`quantity${i}`).replace(/invalid_number/g, "").replace(/too_many_selected/g, "");
+        };
+
+        alert("OOPS! We found some errors in your inputs");
+    };
+
+    if (params.get("error") == "true_no_items_were_selected") {//If there is an "error=true_no_items_were_selected" in the url query, then give an alert that says they didn't select any items.
+        alert("Please select some items before proceeding...");
+    };
+</script>
+
+</html>
