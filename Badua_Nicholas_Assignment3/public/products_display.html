@@ -21,6 +21,17 @@
     <title>Nick's Tennis Shop Products</title>
     <link rel="shortcut icon" type='image/jpg' href="https://img.icons8.com/doodle/48/000000/tennis-ball.png" />
 
+    <div class="navbar">
+        <div class="items_left">
+            <a href="#home">Home</a>
+        </div>
+        <div class="items_right">
+            <a href="#register">Register</a>
+            <a href="#login">Login</a>
+            <!--<a href="#cart">Cart</a>-->
+        </div>
+      </div>
+    
 </head>
 
 <script>
@@ -31,6 +42,14 @@
     <div class=container>
         <div class="header">
             <strong>Nick's Tennis Shop</strong>
+        </div>
+        <div class="navbar_products">
+            
+            <div class= "navbar_header">Products</div>
+            <a href="#rackets"><div class="products_page">Rackets</div></a>
+            <a href="#clothing"><div class="products_page">Clothing</div></a>
+            <a href="#footwear"><div class="products_page">Footwear</div></a>
+            <a href="#accessories"><div class="products_page">Accessories</div></a>
         </div>
         <div class="content-large">
             <form name="quantity_boxes" action="./purchase" method="POST">
@@ -103,6 +122,12 @@
             </h5>
         </div>
     </div>
+
+    <div class= "user_cart">
+        <a href="#cart"><img src = ./images/cart.png onmouseover="src ='./images/cart_drawn.png'" onmouseout="src = './images/cart.png'"></a>
+    </div>
+
+    
 </body>
 
 <script>
@@ -121,3 +146,22 @@
 </script>
 
 </html>
+
+<script>
+    function createCartDisplay() { //check if the input field was left blank. If it was, then it returns true.
+        <div class = "cart_open">
+            <table border="2">
+                <tbody>
+                <tr>
+                    <th class= "cart_item_header" style="text-align: center;" width="25%">Item</th>
+                    <th style="text-align: center;" width="25%">Quantity</th>
+                </tr>
+                <tr>
+                    <td> item 1 </td>
+                    <td> quantity 1 </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+}
+</script>

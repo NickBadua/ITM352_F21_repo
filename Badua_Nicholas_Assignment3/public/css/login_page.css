@@ -87,3 +87,7 @@ a {
     color: #8d8985;
     text-decoration: none;
 }
+
+a:hover {
+    color: #383028;
+}

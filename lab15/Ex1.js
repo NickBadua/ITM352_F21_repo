@@ -4,18 +4,18 @@ var express = require('express');
 var app = express();
 
 var cookieParser = require('cookie-parser');
-app.use(cookieParser());
+app.use(cookieParser()); //when cookie is received on the server when a request is made, this will take the data from the request and put it into the data object
 
 app.get('/set_cookie', function (request, response) {
     //this will send a cookie to the requester
-    response.cookie('name', 'Nick'); //cookies can only be sent in a response to requester only
-    response.send("The name cookie has been sent!")
+    response.cookie('name', 'Nick', { maxAge: 5000}); //cookies can only be sent in a response to requester only. We have to manually make a cookie (i.e., key: value). Server makes the cookie, gives it to browser. When server wants to use the cookie again, the server requests it from the browser.
+    response.send("The name cookie has been sent!") //you can only do a response one time 
 });
 
 app.get('/use_cookie', function (request, response) {
     //this will get the name cookie from the requester and respond with a message
-    console.log(request.cookies);
-    response.send(`Welcome to the Use Cookie page ${request.cookies["name"]}`)
+    console.log(request.cookies); 
+    response.send(`Welcome to the Use Cookie page ${request.cookies["name"]}`) //you can get a specific cookie this way
 });
 
 var filename = 'user_data.json';
