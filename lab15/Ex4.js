@@ -25,7 +25,8 @@ app.get('/use_cookie', function (request, response) {
 app.get('/use_session', function (request, response) {
     //this will get the name cookie from the requester and respond with a message
    //console.log(request.cookies); 
-    response.send(`Welcome, your session ID is ${request.session.id}`) //you can get a specific cookie this way
+    response.send(`Welcome, your session ID is ${request.session.id}`); //you can get a specific cookie this way
+    request.session.destroy();
 });
 
 var filename = 'user_data.json';
@@ -98,9 +99,17 @@ app.post("/register", function (request, response) {
 
 app.get("/login", function (request, response) {
     //check if already logged in by seeing if the username cookie already exists
+    
+    if(typeof request.cookies['username'] != 'undefined') {
+        welcome_str = `Welcome ${request.cookies['username']}!`
+    } else {
+        var welcome_str = "Welcome! You need to login.";
+    };
+    
     // Give a simple login form
     str = `
 <body>
+${welcome_str}
 <form action="" method="POST">
 <input type="text" name="username" size="40" placeholder="enter username" ><br />
 <input type="password" name="password" size="40" placeholder="enter password"><br />
@@ -117,7 +126,8 @@ app.post("/login", function (request, response) {
     let login_password = request.body['password'];
     if (typeof users_reg_data[login_username] != 'undefined') { //checking if what they put in the username is actually something in the user data
         if (users_reg_data[login_username]["password"] == login_password) { 
-            //response.cookie('logged_in_user', 'Nick');
+            //puts username in a cookie called username only if the login is successful
+            response.cookie('username', login_username);
             //Check if there is a last login
             if(typeof request.session['last login'] != 'undefined') {
                 var last_login = request.session['last login']; //if there is a last login: make value of last login
