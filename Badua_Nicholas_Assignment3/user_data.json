@@ -8,20 +8,5 @@
     "full_name": "Grader",
     "password": "grader",
     "email": "itm352@gmail.com"
-  },
-  "nathan": {
-    "full_name": "nathan",
-    "password": "pass123",
-    "email": "nat@gmail.com"
-  },
-  "taytay": {
-    "full_name": "taylor",
-    "password": "pass123",
-    "email": "t@gmail.com"
-  },
-  "cam123": {
-    "full_name": "cameron",
-    "password": "pass123",
-    "email": "cam@gmail.com"
   }
 }

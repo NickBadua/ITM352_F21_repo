@@ -241,7 +241,7 @@ app.post('/login', function (request, response, next) { // (Adapted from lab14 E
     if (!redirected && typeof users_reg_data[login_username] != 'undefined') {
         //VALIDATION: check if password matches the one in the database
         if (users_reg_data[login_username]["password"] == login_password) {
-            response.cookie('logged_in_user', login_username, { maxAge: 5000}); //put current successfully logged in user in a cookie for personalization use
+            response.cookie('logged_in_user', login_username, { maxAge: 30 * 60 * 1000}); //put current successfully logged in user in a cookie for personalization use. Automatically log out after 30 minutes.
             //Dictating which page they should go next:
             //check to see if they came from the checkout page (bc they can't continue without logging in)
             if (params.get("checkout") == "in_progress") {
@@ -430,7 +430,7 @@ app.get("/place_order", function (request, response) {
     // Generate HTML invoice string for email
     let invoice_str = `
   <body style="background-color:white; text-align:center;">
-  <h2 style="font-size:50px; color:black;">Thank you for your order ${request.cookies["logged_in_user"]}!</h2>
+  <h2 style="font-size:50px; color:black;">Thank you for your order ${users_reg_data[request.cookies["logged_in_user"]].full_name}!</h2>
   <table style="text-align:center;width:50%;border:3px solid black;border-collapse:collapse;margin-left:auto;margin-right:auto">
   <th style="background-color:black; color:white">Item</th>
   <th style="background-color:black; color:white">Quantity</th>
@@ -438,6 +438,7 @@ app.get("/place_order", function (request, response) {
     
   //loading the session shopping cart quantities into the invoice str
   let shopping_cart = request.session.cart;
+  var subtotal = 0;
     for (product_key in products_array) {
         for (i = 0; i < products_array[product_key].length; i++) {
             if (typeof shopping_cart[product_key] == 'undefined') continue;
@@ -447,12 +448,50 @@ app.get("/place_order", function (request, response) {
           <tr>
           <td style="border:1px solid black">${products_array[product_key][i].name}</td>
           <td style="border:1px solid black">${quantity}</td>
-          <td style="border:1px solid black">${products_array[product_key][i].price}</td>
-          <tr>`;
+          <td style="border:1px solid black">$${products_array[product_key][i].price}</td>
+          </tr>
+          `;
             }
+        subtotal += quantity * products_array[product_key][i].price;
         }
     }
-    invoice_str += '</table></body>';
+
+    //calculate costs for invoice copy
+    //Compute Sales Tax
+    var tax = .0575; //this remains consistent
+    var salestax = subtotal * tax; 
+
+    //Compute Grand Total
+    var total = subtotal + salestax;
+
+    //Compute shipping
+    //Computing shipping cost for sales up to $49.99
+    if (subtotal < 100 && subtotal != 0) {
+        var shipping = 5.99;
+        //Computing shipping cost for sales up to $99.99 
+    } else {
+        var shipping = 0;
+    }
+
+    //updating the invoice to include the changes
+    invoice_str += `
+    <tr>
+    <td style="border:1px solid black;" colspan= "2">Subtotal</td>
+    <td style="border:1px solid black;">$${subtotal.toFixed(2)}</td>
+    </tr>
+    <tr>
+    <td style="border:1px solid black;" colspan= "2">Tax Included</td>
+    <td style="border:1px solid black;">$${salestax.toFixed(2)}</td></tr>
+    <tr>
+    <td style="border:1px solid black;" colspan= "2">Shipping</td>
+    <td style="border:1px solid black;">$${shipping.toFixed(2)}</td>
+    </tr>
+    <tr>
+    <td style="border:1px solid black;" colspan= "2">Total</td>
+    <td style="border:1px solid black;">$${total.toFixed(2)}</td>
+    </tr>
+    </table>
+    </body>`;
 
     //sender information for authentication
     const transporter = nodemailer.createTransport({ 

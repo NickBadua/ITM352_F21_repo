@@ -51,7 +51,7 @@ body {
     display: grid;
 
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; 
-    grid-template-rows: 400px 1fr 1fr 1fr;
+    grid-template-rows: 400px 1fr 30px 1fr;
 
     gap: 10px;
     
@@ -69,7 +69,7 @@ body {
     grid-column-start: 1;
     grid-column-end: 7;
     grid-row-start: 1;
-    grid-row-end: 4;
+    grid-row-end: 3;
     background-image: url("../images/background.webp");
     font-size: 8vw;
     font-size: 8vh;
@@ -78,6 +78,15 @@ body {
     justify-content: center;
     align-items: center;
     background-size: 100%;
+}
+
+.content-smaller-header {
+    text-align: center;
+    font-size: 25px;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 7;
 }
 
 
@@ -91,7 +100,7 @@ body {
     display: grid;
 
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; 
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr; 
 
     gap: 50px;
     box-sizing: border-box;
