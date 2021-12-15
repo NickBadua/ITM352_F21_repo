@@ -153,8 +153,10 @@ app.post('/add_to_cart', function (request, response, next) {
 
     if (should_sell && sum_of_quantities_array != 0) {
         for (i in products_array[product_type]) {
-            products_array[product_type][i].quantity_available = products_array[product_type][i].quantity_available - Number(quantities_array[i]); //Removing the amount in the cart from the quantity available of the product
+            products_array[product_type][i].total_sold = Number(quantities_array[i]);
+            products_array[product_type][i].quantity_available = products_array[product_type][i].quantity_available - products_array[product_type][i].total_sold; //Removing the amount in the cart from the quantity available of the product
         }
+        console.log(products_array);
     }
 
     //REDIRECT BACK TO PRODUCTS PAGES: If everything checks out (i.e., good quantities), create the array of quantities with product_key
@@ -174,7 +176,7 @@ app.post('/add_to_cart', function (request, response, next) {
     }
     //UPDATE the cart total in nav bar to include the sum of the new quantities
     request.session.cart["cart_total"] += sum_of_quantities_array;
-
+    console.log(products_array);
     //if the quantities pass every validation, go back to the products_page to allow them to continue shopping
     if (should_sell) {
         response.redirect(products_page);
@@ -193,8 +195,9 @@ app.post("/update_quantities", function (request, response) {
                 is_valid = false; //no longer valid quantity
                 response.redirect(`shopping_cart.html?product_key=${product_key}&index=${i}&quantity${i}=${quantity}++not_valid_qty`) //go back to shopping cart
             };
+            var total_count_of_items = products_array[product_key][i].quantity_available + products_array[product_key][i].total_sold; //Keeps count of total items in the store. Used to allow user to put the whole quantity of stock in their shopping cart
             //VALIDATION: check if there is enough in stock
-            if (quantity > products_array[product_key][i].quantity_available && is_valid) {
+            if (quantity > total_count_of_items && is_valid) {
                 is_valid = false;
                 response.redirect(`shopping_cart.html?product_key=${product_key}&index=${i}&quantity${i}=${quantity}++too_many_selected`) //go back to shopping cart
             }
@@ -203,14 +206,22 @@ app.post("/update_quantities", function (request, response) {
     if (is_valid) { //If it passes all validations, then move onto updating cart total for top nav bar and update the quantity in the session cart array
         request.session.cart["cart_total"] = 0; //recreate the cart_total key
         for (product_key in request.body["product_quantity"]) {
+
             for (i in request.body["product_quantity"][product_key]) {
                 quantity = request.body["product_quantity"][product_key][i]; 
                 request.session.cart["cart_total"] += Number(quantity); //updating the session cart_total with the new values in shopping cart
-                request.session.cart[product_key][i] = quantity; //updating the quantity in the session cart array under the specified product key
+                if (quantity != products_array[product_key][i].total_sold) { //if quantity of box is no longer equal to the total sold in products_array
+                    update_quantity_diff = quantity - products_array[product_key][i].total_sold; //find the difference between the quantity and old total_sold
+                    products_array[product_key][i].total_sold = products_array[product_key][i].total_sold + update_quantity_diff; //add the difference
+                    products_array[product_key][i].quantity_available = products_array[product_key][i].quantity_available - update_quantity_diff; //Removing the amount in the cart from the quantity available of the product
+                };
+                request.session.cart[product_key][i] = quantity; //updating the quantity in the session cart array under the specified product key with the new quantities
             };
+            
         };
+        response.redirect("shopping_cart.html?quantities_updated=true"); //if everything passes validation, go back to shopping cart.
     };
-    response.redirect("shopping_cart.html?quantities_updated=true"); //if everything passes validation, go back to shopping cart.
+
 });
 
 //ROUTE for login button on login_page.html
@@ -230,7 +241,7 @@ app.post('/login', function (request, response, next) { // (Adapted from lab14 E
     if (!redirected && typeof users_reg_data[login_username] != 'undefined') {
         //VALIDATION: check if password matches the one in the database
         if (users_reg_data[login_username]["password"] == login_password) {
-            response.cookie('logged_in_user', login_username); //put current successfully logged in user in a cookie for personalization use
+            response.cookie('logged_in_user', login_username, { maxAge: 5000}); //put current successfully logged in user in a cookie for personalization use
             //Dictating which page they should go next:
             //check to see if they came from the checkout page (bc they can't continue without logging in)
             if (params.get("checkout") == "in_progress") {
@@ -260,6 +271,7 @@ app.get("/register", function (request, response) {
 app.get("/logout", function (request, response) { //logout. This also clears the cart.
     response.clearCookie('logged_in_user'); //gets rid of logged in user from cookie
     response.clearCookie('logged_in_user_email');
+
     response.redirect("/index.html?&&logout=true");
 
 });

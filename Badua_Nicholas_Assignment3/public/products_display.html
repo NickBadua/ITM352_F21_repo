@@ -7,12 +7,12 @@
 
 -->
 <script>
-    //found this function on https://stackoverflow.com/questions/10730362/get-cookie-by-name
-    function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
+//found this function on https://stackoverflow.com/questions/10730362/get-cookie-by-name
+function getCookie(name) {
+    const value = `; ${document.cookie}`; 
+    const parts = value.split(`; ${name}=`); //prepend the cookies string with "; ", so that every cookie name is enclosed with "; " and "=":
+    if (parts.length === 2) return parts.pop().split(';').shift(); //if token is found in a cookie string, pull that out from an array with pop()
+};
 </script>
 
 <!--gets product data from server-->

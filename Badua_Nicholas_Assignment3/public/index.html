@@ -8,7 +8,10 @@
 <script src="./session_data.js" type="text/javascript"></script>
 <!--get navigation bar function located on another file-->
 <script src="./navigation_bar.js" type="text/javascript"></script>
-    
+  
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,3 +67,12 @@
 </body>
 
 </html>
+
+<script>
+    var params = (new URL(document.location)).searchParams; //Puts the url into the params variable. Used (later) to get information from the query string.
+        //alerts------
+        if(params.has("logout")) {
+            alert("You have been successfully logged out");
+        }
+
+</script>
