@@ -1,0 +1,170 @@
+<!--
+
+Author: Nicholas Badua
+Date: 14 December 2021
+Description: This is the code is pretty much what is shown on the shopping cart, but it changes buttons to ask you to confirm your order. NOTE: The code for invoice.html is a modified version of the Invoice4 WOD
+
+-->
+
+<!--gets product data from server-->
+<script src="./products_data.js" type="text/javascript"></script>
+<!--get quantities from cart object-->
+<script src="./session_data.js" type="text/javascript"></script>
+<!--get navigation bar function located on another file-->
+<script src="./navigation_bar.js" type="text/javascript"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/shopping_cart.css">
+    <link rel="shortcut icon" type='image/jpg' href="https://img.icons8.com/doodle/48/000000/tennis-ball.png" />
+    <title>Nick's Tennis Shop: Confirm Order</title>
+
+    <div class="navbar">
+        <div class="items_left">
+            <a href="/index.html">Home</a>
+        </div>
+        <div class="items_right">
+          <!--puts the same navigation bar on every page-->
+            <script>createTopNavigationBar(cart_items_array["cart_total"]);</script>
+        </div>
+    </div>
+>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <strong>Nick's Tennis Shop</strong>
+        </div>
+        <div class="content-large">
+            <div class="shopping_cart_header">
+                Review your order
+            </div>
+            <div class="shopping_cart_items">
+                <form name="cart_quantity_boxes" action="/update_quantities" method="POST">
+                <table border="2">
+                    <tbody>
+                        <tr>
+                            <th style="text-align: center;" width="25%">Item</th>
+                            <th style="text-align: center;" width="25%">Name</th>
+                            <th style="text-align: center;" width="15%">Quantity</th>
+                            <th style="text-align: center;" width="25%">Price</th>
+                        </tr>
+                        <script>
+                            subtotal = 0;
+
+                            //adapted from Brandon Marcos's Assignment3
+                            for (product_key in cart_items_array) {  //goes through each type of product (3)
+                                for (i in cart_items_array[product_key]) {  //goes through each of the objects under the product type (3)
+                                    let quantity = cart_items_array[product_key][i] //for convenience puts quantities from array in variable 'quantity'
+                                    if (quantity == 0) continue; //just skip the row if the quantity is a 0
+                                    var extended_price = products_array[product_key][i].price * quantity;
+                                    subtotal = subtotal + extended_price;
+
+                                    document.write(`
+                                <tr>
+                                <td width="25%"><img src = ./images/${products_array[product_key][i].image}></td>
+                                <td width="25%">${products_array[product_key][i].name}</td>
+                                <td align="center">${quantity}</td>
+                                <td width="35%">$${products_array[product_key][i].price.toFixed(2)}</td>
+                                </tr>
+                            `)
+                                }  
+                            }
+
+                        </script>
+
+                    </tbody>
+                </table>
+            </form>
+            </div>
+        </div>
+        <div class="content-small">
+            <div class="total_cost_preview">
+            <table border="2">
+                <tbody>
+                    <th style="text-align: center;" colspan="4">Order Summary</th>
+                    <script>//Compute Sales Tax
+                        var tax = .0575;
+                        var salestax = subtotal * tax;
+            
+                        //Compute Grand Total
+                        var total = subtotal + salestax;
+            
+                      </script>
+                      <tr>
+            
+                        <td style="text-align: left;" colspan="3">Sub-total</td>
+                        <td style="text-align: right; padding-right:15px;" width="54%">$
+                          <script>document.write(subtotal.toFixed(2))</script>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: left;" colspan="3"><span style="font-family: arial;">Tax @
+                            <script>document.write(tax * 100)</script>%
+                          </span></td>
+                        <td style="text-align: right; padding-right:15px;" width="54%">$
+                          <script>document.write(salestax.toFixed(2))</script>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: left;" colspan="3"><span style="font-family: arial;">Shipping</span>
+                        </td>
+                        <td style="text-align: right; padding-right:15px;" width="54%">
+                          <script>
+                            //Computing shipping cost for sales up to $49.99
+                            if (subtotal < 100) {
+                              var shipping = 5.99;
+                              document.write("$" + shipping.toFixed(2));
+                              //Computing shipping cost for sales up to $99.99 
+                                } else {
+                              var shipping = 0;
+                              document.write("Free shipping");
+                          };
+                          </script>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: left;font-size: 20px;" colspan="3"><strong>Total</strong></td>
+                        <td style="text-align: right; padding-right:15px; font-size: 20px;" width="54%"><b>$
+                            <script>
+                              //Calculating total for costs under $100
+                              if (shipping > 1) {
+                                document.write((shipping + total).toFixed(2))
+                                //Calculating total for costs over $100
+                              } else {
+                                document.write(((shipping * subtotal) + total).toFixed(2));
+                              }
+                            </script>
+                          </b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+
+            <div class="checkout_button">
+              <form action="./place_order" method="GET">
+                  <input style="background-color: rgb(255, 207, 75); border-color: rgb(202, 160, 42); color:rgb(70, 62, 53);"class="rackets_button" type="submit" value="PLACE ORDER">
+              </form>
+              <p style="font-size: 15px;
+              color:rgb(80, 80, 80);">By placing your order,  
+              you have confirmed that everything is correct and agree to our terms of service.</p> <!--Text under the place order button to confirm that they have made sure that there are no errors in the invoice-->
+          </div>
+        </div>
+        <div class="footer">
+
+            <div class="shipping_header">SHIPPING POLICY:</div>
+            <p>Domestic Flat Rate Shipping Fee is $5.99</p>
+            <p>Free Shipping For Orders Over $100.00</p>
+
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

@@ -1,6 +1,6 @@
 <!--
     Author: Nicholas Badua
-    Date: 30 November 2021
+    Date: 14 December 2021
     Description: This is the code for the registration page which comes if a user does not already have an account.
   
 -->
@@ -12,8 +12,6 @@
 
     var login_action = "./login?";
     login_action += params; //Keeps the quantities around.
-
-
 </script>
 
 <!DOCTYPE html>
@@ -32,6 +30,8 @@
 
     <div class=container>
         <div class=login_card>
+            <a href="javascript:history.back()"><img src="./images/close_window.png"></a> <!--Back function taken from: "https://stackoverflow.com/questions/2548566/go-back-to-previous-page"-->
+            <br>
             <div class=header>Register</div>
 
             <script> 
@@ -106,13 +106,11 @@
         </div>
         <div class=already_have_account>
             Already a user?
-            <script>
+
             
-            //Link to return back to the login page without having to register.
-                document.write(`
-            <a href=${login_action}>Login in</a>
-        `)
-            </script>
+            <!--Link to return back to the login page without having to register.-->
+            <a href="./login_page.html">Login in</a>
+
 
 
         </div>

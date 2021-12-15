@@ -1,38 +1,82 @@
- [
-    {
-        "name": "Wilson Burn 100S", 
-        "price": 160.00,
-        "image": "wilson_burn_100s.jpg",
-        "quantity_available": 3
-    },
-    {
-        "name": "Babolat Pure Aero", 
-        "price": 229.00,
-        "image":"babolat_pure_aero.jpg",
-        "quantity_available": 5
-    },
-    {
-        "name": "Head Graphene 360+ Extreme MP", 
-        "price": 209.00,
-        "image":"head_graphene.jpg",
-        "quantity_available": 8
-    },
-    {
-        "name": "Yonex VCORE 100", 
-        "price": 239.000,
-        "image":"yonex_vcore_100.jpg",
-        "quantity_available": 2
-    },
-    {
-        "name": "Tennis Balls", 
-        "price": 4.50,
-        "image":"tennis_ball.jpeg",
-        "quantity_available": 4
-    },
-    {
-        "name": "Over Grip", 
-        "price": 6.99,
-        "image":"tourna_grip.jpg",
-        "quantity_available": 8
-    }
-]
+ {
+    "rackets":[
+        {
+            "name": "Wilson Burn 100S", 
+            "price": 160.00,
+            "image": "wilson.png",
+            "quantity_available": 3
+        },
+        {
+            "name": "Babolat Pure Aero", 
+            "price": 229.00,
+            "image":"babolat_pure_aero.jpg",
+            "quantity_available": 5
+        },
+        {
+            "name": "Head Graphene Extreme", 
+            "price": 209.00,
+            "image":"head_graphene.jpg",
+            "quantity_available": 8
+        }
+    ],
+    "clothing": [
+        {
+            "name": "Nike Unisex Long Sleeve", 
+            "price": 52.00,
+            "image":"nike_long_sleeve.png",
+            "quantity_available": 12
+        },
+        {
+            "name": "adidas Unisex Shorts", 
+            "price": 40.99,
+            "image":"adidas_shorts.jpg",
+            "quantity_available": 9
+        },
+        {
+            "name": "Under Armour Unisex Top", 
+            "price": 27.99,
+            "image":"under_armour_shirt.jpg",
+            "quantity_available": 20
+        }
+    ],
+    "footwear": [
+        {
+            "name": "Asics Gel Resolution Shoes", 
+            "price": 170.50,
+            "image":"asics_shoe.png",
+            "quantity_available": 4
+        },
+        {
+            "name": "adidas Barricade Shoes", 
+            "price": 120.00,
+            "image":"adidas_shoe.png",
+            "quantity_available": 7
+        },
+        {
+            "name": "Nike Air Zoom Vapor Shoes", 
+            "price": 203.99,
+            "image":"nike_shoe.png",
+            "quantity_available": 11
+        }
+    ],
+    "accessories": [
+        {
+            "name": "Tennis Balls", 
+            "price": 4.50,
+            "image":"tennis_ball.jpeg",
+            "quantity_available": 4
+        },
+        {
+            "name": "Over Grip", 
+            "price": 6.99,
+            "image":"tourna_grip.jpg",
+            "quantity_available": 8
+        },
+        {
+            "name": "Dampener", 
+            "price": 3.99,
+            "image":"dampener.jpg",
+            "quantity_available": 10
+        }
+    ]
+}

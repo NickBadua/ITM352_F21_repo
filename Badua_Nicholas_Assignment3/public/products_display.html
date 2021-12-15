@@ -1,14 +1,27 @@
 <!--
     Author: Nicholas Badua
-    Date: 30 November 2021
+    Date: 14 December 2021
     Description: This is the code for the products display page containing all the products along with their prices and inventory stock amounts.
     
     NOTE: The code for products_display.html is adapted from SmartPhoneProducts3 WOD for use in Assignments 1 and 2.
 
 -->
+<script>
+    //found this function on https://stackoverflow.com/questions/10730362/get-cookie-by-name
+    function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+</script>
 
-
+<!--gets product data from server-->
 <script src="./products_data.js" type="text/javascript"></script>
+<!--get quantities from cart object-->
+<script src="./session_data.js" type="text/javascript"></script>
+<!--get navigation bar function located on another file-->
+<script src="./navigation_bar.js" type="text/javascript"></script>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,24 +31,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/products_display.css">
-    <title>Nick's Tennis Shop Products</title>
+    <title>Nick's Tennis Shop: Products</title>
     <link rel="shortcut icon" type='image/jpg' href="https://img.icons8.com/doodle/48/000000/tennis-ball.png" />
-
-    <div class="navbar">
-        <div class="items_left">
-            <a href="#home">Home</a>
-        </div>
-        <div class="items_right">
-            <a href="#register">Register</a>
-            <a href="#login">Login</a>
-            <!--<a href="#cart">Cart</a>-->
-        </div>
-      </div>
     
 </head>
 
 <script>
     var params = (new URL(document.location)).searchParams; //Puts the url into the params variable. Used (later) to get information from the query string.
+    var add_to_cart_action = "./add_to_cart?";
+    add_to_cart_action += params; //Keeps the quantities around.
+
 </script>
 
 <body>
@@ -44,22 +49,38 @@
             <strong>Nick's Tennis Shop</strong>
         </div>
         <div class="navbar_products">
-            
+        
             <div class= "navbar_header">Products</div>
-            <a href="#rackets"><div class="products_page">Rackets</div></a>
-            <a href="#clothing"><div class="products_page">Clothing</div></a>
-            <a href="#footwear"><div class="products_page">Footwear</div></a>
-            <a href="#accessories"><div class="products_page">Accessories</div></a>
+            <a href="products_display.html?product_key=rackets"><div class="products_page">Rackets</div></a>
+            <a href="products_display.html?product_key=clothing"><div class="products_page">Clothing</div></a>
+            <a href="products_display.html?product_key=footwear"><div class="products_page">Footwear</div></a>
+            <a href="products_display.html?product_key=accessories"><div class="products_page">Accessories</div></a>
         </div>
         <div class="content-large">
-            <form name="quantity_boxes" action="./purchase" method="POST">
+            <script>
+            document.write(`<form name="quantity_boxes" action=${add_to_cart_action} method="POST">`)
+            </script>
                 <main>
 
                     <script>
 
-                        for (i = 0; i < products_array.length; i++) { //Uses a loop that creates the products on the page in a consistent format. Based off of previous work done on SmartPhoneProducts3.
+                        //storing the product key in a variable so I don't have to have multiple forms
+                        if (params.get('product_key') == "rackets") {
+                            var product_key = products_array.rackets;
+                        };
+                        if (params.get('product_key') == "clothing") {
+                            var product_key = products_array.clothing;
+                        };
+                        if (params.get('product_key') == "footwear") {
+                            var product_key = products_array.footwear;
+                        };
+                        if (params.get('product_key') == "accessories") {
+                            var product_key = products_array.accessories;
+                        };
+
+                        for (i = 0; i < products_array.rackets.length; i++) { //Uses a loop that creates the products on the page in a consistent format. Based off of previous work done on SmartPhoneProducts3.
                             if (params.get(`quantity${i}`)) { //AFTER VALIDATION: if there are errors...
-                                var error_message = params.get(`quantity${i}`).replace(/invalid_number/g, "is not a positive whole number!").replace(/too_many_selected/g, "is too many. There's not enough in stock.");
+                                var error_message = params.get(`quantity${i}`).replace(/invalid_number/g, "is not a positive whole number!").replace(/too_many_selected/g, "is too many. There's not enough in stock.").replace(/too_many_characters/g, "Exceeded the character limit");
                                 if (Number(error_message) == 0 || Number(error_message) === parseInt(error_message)) {
                                     var error_message = "<br>"; //Replaces the message with a break to maintaining the spacing when there is no error message. Otherwise it puts the value from the textbox underneath the products that don't have an error as well.
                                 };
@@ -67,11 +88,11 @@
                                 //Displays the error message beneath the product with the error.
                                 document.write(`
                             <div class= "product_slot">
-                                <img src = ./images/${products_array[i].image}> 
+                                <img src = ./images/${product_key[i].image}>
                                 <div class="item_properties">
-                                <h2>${products_array[i].name}</h2>
-                                <p> Currently Stocked: ${products_array[i].quantity_available}
-                                <p>$${products_array[i].price.toFixed(2)} USD</p>
+                                <h2>${product_key[i].name}</h2>
+                                <p> Currently Stocked: ${product_key[i].quantity_available}
+                                <p>$${product_key[i].price.toFixed(2)} USD</p>
                                 <label>Qty:</label>
                                 <input type="text" placeholder=0 name="quantity${i}" size="1">
                                 <br>
@@ -85,11 +106,11 @@
                             } else { //This is what people see before they try to submit (i.e., there are no errors.)
                                 document.write(`
                             <div class= "product_slot">
-                                <img src = ./images/${products_array[i].image}> 
+                                <img src = ./images/${product_key[i].image}> 
                                 <div class="item_properties">
-                                <h2>${products_array[i].name}</h2>
-                                <p> Currently Stocked: ${products_array[i].quantity_available}
-                                <p>$${products_array[i].price.toFixed(2)} USD</p>
+                                <h2>${product_key[i].name}</h2>
+                                <p> Currently Stocked: ${product_key[i].quantity_available}
+                                <p>$${product_key[i].price.toFixed(2)} USD</p>
                                 <label>Qty:</label>
                                 <input type="text" placeholder=0 name="quantity${i}">
                                 <br>
@@ -106,35 +127,51 @@
                     </script>
 
                 </main>
-                <h3>Ready to Purchase?</h3>
                 <div class="purchase_button">
-                    <input type="submit" value="Place Order">
+                    <input type="submit" value="Add to Cart">
                 </div>
             </form>
         </div>
 
         <div class="footer">
 
-            <h5>
-                <b>SHIPPING POLICY:</b>
-                <br>Domestic Flat Rate Shipping Fee is $5.99
-                <br>Free Shipping For Orders Over $100.00
-            </h5>
+            <div class= "shipping_header">SHIPPING POLICY:</div>
+            <p>Domestic Flat Rate Shipping Fee is $5.99</p>
+            <p>Free Shipping For Orders Over $100.00</p>
+            
         </div>
     </div>
 
-    <div class= "user_cart">
-        <a href="#cart"><img src = ./images/cart.png onmouseover="src ='./images/cart_drawn.png'" onmouseout="src = './images/cart.png'"></a>
-    </div>
 
     
 </body>
+<!--Navigation bar-->
+<div class="navbar">
+    <div class="items_left">
+        <a href="/index.html">Home</a>
+    </div>
+    <div class="items_right">
+    <script>
 
-<script>
-    if (params.get("quantity0")) {
+        //let logged_user = params.get("successful_login");
+
+    createTopNavigationBar(cart_items_array["cart_total"]);
+    </script>
+    </div>
+  </div>
+
+<script> 
+    if (params.get("logout")== "true") {
+        alert("You've been logged out")
+    }
+
+    if (params.has("added_to_cart")) {
+        alert("Items were added to your cart!");
+    };
+    if (params.get("quantity0") && !params.has("added_to_cart")) {
         //Makes the quantity textboxes sticky
-        for (i in products_array) {
-            quantity_boxes[`quantity${i}`].value = params.get(`quantity${i}`).replace(/invalid_number/g, "").replace(/too_many_selected/g, "");
+        for (i in product_key) {
+            quantity_boxes[`quantity${i}`].value = params.get(`quantity${i}`).replace(/invalid_number/g, "").replace(/too_many_selected/g, "").replace(/too_many_characters/g, "");
         };
 
         alert("OOPS! We found some errors in your inputs");
@@ -143,25 +180,8 @@
     if (params.get("error") == "true_no_items_were_selected") {//If there is an "error=true_no_items_were_selected" in the url query, then give an alert that says they didn't select any items.
         alert("Please select some items before proceeding...");
     };
+
+    
 </script>
 
 </html>
-
-<script>
-    function createCartDisplay() { //check if the input field was left blank. If it was, then it returns true.
-        <div class = "cart_open">
-            <table border="2">
-                <tbody>
-                <tr>
-                    <th class= "cart_item_header" style="text-align: center;" width="25%">Item</th>
-                    <th style="text-align: center;" width="25%">Quantity</th>
-                </tr>
-                <tr>
-                    <td> item 1 </td>
-                    <td> quantity 1 </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-}
-</script>
